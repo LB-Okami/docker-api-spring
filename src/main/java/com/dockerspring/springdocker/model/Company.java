@@ -25,7 +25,7 @@ public class Company {
     private LocalDateTime lastUpdate;
 
     @OneToMany(mappedBy = "company")
-    private List<User> users;
+    private List<Employee> employee;
 
     public long getId() {
         return id;
@@ -59,11 +59,12 @@ public class Company {
         this.lastUpdate = lastUpdate;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Employee> getEmployee() {
+        return employee;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setEmployee(List<Employee> employee) {
+        this.employee = employee;
     }
+
 }

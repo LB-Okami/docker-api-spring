@@ -22,7 +22,7 @@ public class Category {
 	private String name;
 
     @OneToOne
-    private User user;
+    private Employee employee;
 
     private LocalDate creationDate;
 
@@ -44,12 +44,12 @@ public class Category {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public LocalDate getCreationDate() {

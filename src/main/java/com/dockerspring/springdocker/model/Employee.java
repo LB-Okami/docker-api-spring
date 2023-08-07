@@ -1,6 +1,5 @@
 package com.dockerspring.springdocker.model;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,8 +15,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_user")
-public class User {
+@Table(name = "tb_employee")
+public class Employee {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -127,4 +126,6 @@ public class User {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    
 }

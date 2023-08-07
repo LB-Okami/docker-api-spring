@@ -1,9 +1,14 @@
 package com.dockerspring.springdocker.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.dockerspring.springdocker.model.Company;
 import com.dockerspring.springdocker.repositories.CompanyRepository;
@@ -14,6 +19,20 @@ public class CompanyService {
     private CompanyRepository companyRepository;
 
     public Optional<Company> saveCompany(Company company) {
+
+        Optional<Company> companyName = companyRepository.findByName(company.getName());
+
+        if(companyName.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        company.setCreationDate(LocalDate.now());
+        company.setLastUpdate(LocalDateTime.now());
+
         return Optional.of(companyRepository.save(company));
+    }
+
+    public List<Company> findAll() {
+        return companyRepository.findAll();
     }
 }

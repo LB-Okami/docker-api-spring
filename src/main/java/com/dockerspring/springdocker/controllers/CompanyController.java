@@ -1,11 +1,13 @@
 package com.dockerspring.springdocker.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,11 @@ import com.dockerspring.springdocker.services.CompanyService;
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
+
+    @GetMapping
+    public ResponseEntity<List<Company>> findAll() {
+        return ResponseEntity.ok(companyService.findAll());
+    }
 
     @PostMapping
     public ResponseEntity<Company> save(@RequestBody Company company) {
