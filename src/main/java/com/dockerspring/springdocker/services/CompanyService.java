@@ -26,7 +26,7 @@ public class CompanyService {
         Company companyId = companyRepository.findById(id);
 
         if(companyId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         return companyRepository.findById(id);

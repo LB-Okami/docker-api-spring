@@ -22,6 +22,7 @@ import com.dockerspring.springdocker.services.CompanyService;
 @RequestMapping("/companies")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CompanyController {
+    
     @Autowired
     private CompanyService companyService;
 
