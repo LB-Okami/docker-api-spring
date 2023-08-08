@@ -1,21 +1,24 @@
 package com.dockerspring.springdocker.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.dockerspring.springdocker.model.Company;
 import com.dockerspring.springdocker.services.CompanyService;
 
-@Controller
+@RestController
 @RequestMapping("/companies")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CompanyController {
@@ -23,19 +26,32 @@ public class CompanyController {
     private CompanyService companyService;
 
     @GetMapping
-    public ResponseEntity<List<Company>> findAll() {
-        return ResponseEntity.ok(companyService.findAll());
+    @ResponseStatus(HttpStatus.OK)
+    public List<Company> findAll() {
+        return companyService.findAll();
+    }
+    
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Company findById(@PathVariable Long id) {
+        return companyService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Company> save(@RequestBody Company company) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Company save(@RequestBody Company company) {
+        return companyService.saveCompany(company);
+    }
 
-        Optional<Company> optionalCompany = companyService.saveCompany(company);
-		try {
-			return ResponseEntity.ok(optionalCompany.get());
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
-        
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody Company updatedCompany, @PathVariable Long id) {
+        companyService.updateCompany(updatedCompany, id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id) {
+        companyService.delete(id);
     }
 }

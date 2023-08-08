@@ -2,12 +2,15 @@ package com.dockerspring.springdocker.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -21,8 +24,8 @@ public class Category {
     @NotNull
 	private String name;
 
-    @OneToOne
-    private Employee employee;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Employee> employee;
 
     private LocalDate creationDate;
 
@@ -44,14 +47,6 @@ public class Category {
         this.name = name;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
     public LocalDate getCreationDate() {
         return creationDate;
     }
@@ -67,4 +62,12 @@ public class Category {
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+    public List<Employee> getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(List<Employee> employee) {
+        this.employee = employee;
+    }    
 }

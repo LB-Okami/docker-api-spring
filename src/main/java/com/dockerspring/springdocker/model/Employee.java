@@ -3,14 +3,13 @@ package com.dockerspring.springdocker.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -37,9 +36,9 @@ public class Employee {
 
     private LocalDate creationDate;
 
-    private LocalDateTime lastUpdate;
+    private LocalDateTime lastUpdate;    
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -126,6 +125,4 @@ public class Employee {
     public void setCompany(Company company) {
         this.company = company;
     }
-
-    
 }

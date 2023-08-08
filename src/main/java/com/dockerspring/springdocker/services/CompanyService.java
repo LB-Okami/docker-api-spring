@@ -18,21 +18,60 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public Optional<Company> saveCompany(Company company) {
+    public List<Company> findAll() {
+        return companyRepository.findAll();
+    }
 
-        Optional<Company> companyName = companyRepository.findByName(company.getName());
+    public Company findById(long id) {
+        Company companyId = companyRepository.findById(id);
 
-        if(companyName.isPresent()) {
+        if(companyId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        return companyRepository.findById(id);
+    }
+
+    public Company saveCompany(Company company) {
+        Company companyName = companyRepository.findByName(company.getName());
+
+        if(companyName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         company.setCreationDate(LocalDate.now());
         company.setLastUpdate(LocalDateTime.now());
 
-        return Optional.of(companyRepository.save(company));
+        return companyRepository.save(company);
     }
 
-    public List<Company> findAll() {
-        return companyRepository.findAll();
+    public Company updateCompany(Company updatedCompany, long id) {
+
+        Company companyDatabase = companyRepository.findById(id);
+
+        if(companyDatabase == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        Company company = companyDatabase;
+
+        company.setName(updatedCompany.getName());
+        company.setCreationDate(companyDatabase.getCreationDate());
+        company.setLastUpdate(LocalDateTime.now());
+        company.setEmployee(company.getEmployee());
+
+        return companyRepository.save(company);
+    }
+
+    public void delete(Long id) {
+
+        Optional<Company> companyId = companyRepository.findById(id);
+
+
+        if(!companyId.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        companyRepository.deleteById(id);
     }
 }

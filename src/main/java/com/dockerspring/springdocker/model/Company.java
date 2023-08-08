@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class Company {
 
     private LocalDateTime lastUpdate;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<Employee> employee;
 
     public long getId() {
@@ -66,5 +67,4 @@ public class Company {
     public void setEmployee(List<Employee> employee) {
         this.employee = employee;
     }
-
 }
