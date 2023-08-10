@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ public class Company {
     private LocalDateTime lastUpdate;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Employee> employee;
 
     public long getId() {

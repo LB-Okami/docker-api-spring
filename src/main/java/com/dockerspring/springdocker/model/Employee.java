@@ -3,6 +3,9 @@ package com.dockerspring.springdocker.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,10 +42,12 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonManagedReference
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
+    @JsonManagedReference
     private Company company;
 
     public long getId() {
