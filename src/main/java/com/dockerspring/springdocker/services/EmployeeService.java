@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.dockerspring.springdocker.model.Company;
 import com.dockerspring.springdocker.model.Employee;
 import com.dockerspring.springdocker.repositories.EmployeeRepository;
 
@@ -40,9 +41,25 @@ public class EmployeeService {
 
         employee.setCreationDate(LocalDate.now());
         employee.setLastUpdate(LocalDateTime.now());
-        employee.setPassword(employee.getPassword());
         employee.setCompany(employee.getCompany());
         employee.setCategory(employee.getCategory());
+
+        return employeeRepository.save(employee);
+    }
+
+    public Employee updateEmployee(Employee updatedEmployee, long id) {
+
+        Employee employeeDatabase = employeeRepository.findById(id);
+
+        if(employeeDatabase == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        Employee employee = employeeDatabase;
+
+        employee.setName(employeeDatabase.getName());
+        employee.setCreationDate(employeeDatabase.getCreationDate());
+        employee.setLastUpdate(LocalDateTime.now());
 
         return employeeRepository.save(employee);
     }
