@@ -47,8 +47,12 @@ public class CategoryService {
     public Category updateCategory(Category updatedCategory, long id) {
 
         Category categoryDatabase = categoryRepository.findById(id);
+        Category categoryByName = categoryRepository.findByName(updatedCategory.getName());
 
         if(categoryDatabase == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        else if(!updatedCategory.getName().equals(categoryDatabase.getName()) && categoryByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 

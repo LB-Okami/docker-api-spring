@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.dockerspring.springdocker.model.Category;
 import com.dockerspring.springdocker.model.Company;
 import com.dockerspring.springdocker.repositories.CompanyRepository;
 
@@ -48,8 +49,12 @@ public class CompanyService {
     public Company updateCompany(Company updatedCompany, long id) {
 
         Company companyDatabase = companyRepository.findById(id);
+        Company companyByName = companyRepository.findByName(updatedCompany.getName());
 
         if(companyDatabase == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        else if(!updatedCompany.getName().equals(companyDatabase.getName()) && companyByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 

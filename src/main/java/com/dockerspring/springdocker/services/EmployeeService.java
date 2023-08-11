@@ -50,14 +50,23 @@ public class EmployeeService {
     public Employee updateEmployee(Employee updatedEmployee, long id) {
 
         Employee employeeDatabase = employeeRepository.findById(id);
+        Employee employeeCpf = employeeRepository.findByCpf(updatedEmployee.getCpf());
 
         if(employeeDatabase == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        else if(!updatedEmployee.getCpf().equals(employeeDatabase.getCpf()) && employeeCpf != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         Employee employee = employeeDatabase;
 
-        employee.setName(employeeDatabase.getName());
+        employee.setName(updatedEmployee.getName());
+        employee.setEmail(updatedEmployee.getEmail());
+        employee.setCpf(updatedEmployee.getCpf());
+        employee.setPassword(updatedEmployee.getPassword());
+        employee.setSalary(updatedEmployee.getSalary());
+
         employee.setCreationDate(employeeDatabase.getCreationDate());
         employee.setLastUpdate(LocalDateTime.now());
 
