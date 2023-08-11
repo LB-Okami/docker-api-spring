@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -42,12 +43,12 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonManagedReference
+    @JsonIgnoreProperties("employee")
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    @JsonManagedReference
+    @JsonIgnoreProperties("employee")
     private Company company;
 
     public long getId() {

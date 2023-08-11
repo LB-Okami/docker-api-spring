@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -28,7 +29,7 @@ public class Company {
     private LocalDateTime lastUpdate;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonIgnoreProperties("company")
     private List<Employee> employee;
 
     public long getId() {
