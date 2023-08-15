@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.dockerspring.springdocker.model.Company;
 import com.dockerspring.springdocker.model.Employee;
 import com.dockerspring.springdocker.repositories.EmployeeRepository;
 
@@ -32,10 +31,10 @@ public class EmployeeService {
     }
 
     public Employee saveEmployee(Employee employee) {
-        Employee employeeCpf = employeeRepository.findByCpf(employee.getCpf());
-        Employee employeeEmail = employeeRepository.findByEmail(employee.getEmail());
+        Employee employeeByCpf = employeeRepository.findByCpf(employee.getCpf());
+        Employee employeeByEmail = employeeRepository.findByEmail(employee.getEmail());
 
-        if(employeeCpf != null || employeeEmail != null ) {
+        if(employeeByCpf != null || employeeByEmail != null ) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -50,12 +49,12 @@ public class EmployeeService {
     public Employee updateEmployee(Employee updatedEmployee, long id) {
 
         Employee employeeDatabase = employeeRepository.findById(id);
-        Employee employeeCpf = employeeRepository.findByCpf(updatedEmployee.getCpf());
+        Employee employeeByCpf = employeeRepository.findByCpf(updatedEmployee.getCpf());
 
         if(employeeDatabase == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        else if(!updatedEmployee.getCpf().equals(employeeDatabase.getCpf()) && employeeCpf != null) {
+        else if(!updatedEmployee.getCpf().equals(employeeDatabase.getCpf()) && employeeByCpf != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 

@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.dockerspring.springdocker.model.Category;
 import com.dockerspring.springdocker.model.Company;
 import com.dockerspring.springdocker.repositories.CompanyRepository;
 
@@ -24,9 +23,9 @@ public class CompanyService {
     }
 
     public Company findById(long id) {
-        Company companyId = companyRepository.findById(id);
+        Company companyById = companyRepository.findById(id);
 
-        if(companyId == null) {
+        if(companyById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
@@ -34,9 +33,9 @@ public class CompanyService {
     }
 
     public Company saveCompany(Company company) {
-        Company companyName = companyRepository.findByName(company.getName());
+        Company companyByName = companyRepository.findByName(company.getName());
 
-        if(companyName != null) {
+        if(companyByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -70,10 +69,10 @@ public class CompanyService {
 
     public void delete(Long id) {
 
-        Optional<Company> companyId = companyRepository.findById(id);
+        Optional<Company> companyById = companyRepository.findById(id);
 
 
-        if(!companyId.isPresent()) {
+        if(!companyById.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 

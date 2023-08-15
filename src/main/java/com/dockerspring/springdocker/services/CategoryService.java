@@ -22,9 +22,9 @@ public class CategoryService {
     }
 
     public Category findById(long id) {
-        Category categoryId = categoryRepository.findById(id);
+        Category categoryById = categoryRepository.findById(id);
 
-        if(categoryId == null) {
+        if(categoryById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
@@ -32,9 +32,9 @@ public class CategoryService {
     }
 
     public Category saveCategory(Category category) {
-        Category categoryName = categoryRepository.findByName(category.getName());
+        Category categoryByName = categoryRepository.findByName(category.getName());
 
-        if(categoryName != null) {
+        if(categoryByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -68,10 +68,10 @@ public class CategoryService {
 
     public void delete(Long id) {
 
-        Optional<Category> categoryId = categoryRepository.findById(id);
+        Optional<Category> categoryById = categoryRepository.findById(id);
 
 
-        if(!categoryId.isPresent()) {
+        if(!categoryById.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
